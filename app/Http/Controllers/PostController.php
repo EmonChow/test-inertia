@@ -14,15 +14,13 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Post $post)
+    public function index()
     {
+        $posts = Post::latest()->paginate(10);
+        return Inertia::render('Post', ['posts' => $posts]);
+      
         
-        $data = [
-            'name' => 'Sports',
-            'title' => 'Our Women team get suff Championship',
-            'description' =>'Our Women team get suff Championship'
-        ];
-       return Inertia::render('Post', $data);
+       
     }
 
     /**
