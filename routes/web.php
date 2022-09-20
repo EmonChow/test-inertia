@@ -35,7 +35,3 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::get('/post', [PostController::class, 'index']);
-Route::post('/post', [PostController::class, 'store']);
-Route::patch('/post/edit/{id}', [PostController::class, 'update']);
-Route::delete('/post/delete/{id}', [PostController::class, 'delete']);
