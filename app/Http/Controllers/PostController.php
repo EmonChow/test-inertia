@@ -52,9 +52,12 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-
-        Post::create($request->all());
-        return Redirect::route('posts.index');
+        $post = new Post();
+        $post->fill($request->all());
+        if ($post->save()) {
+            return Redirect::route('posts.index');
+        }
+        return response()->json(['message' => 'Something went wrong'], 400);
     }
 
    
