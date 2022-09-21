@@ -37,18 +37,18 @@
 </template>
 
 <script>
-
+import { useForm } from "@inertiajs/inertia-vue3";
     export default {
-        name: 'PostCreate',
-        data(){
-            return{
-                formData: {
-                    name:'',
-                    title:'',
-                    description: ''
-                }
-            }
-        },
+      
+        setup() {
+        const formData = useForm({
+            title: null,
+            description: null,
+            name: null
+        });
+
+        return { formData };
+    },
         methods: {
        submitPost(){
          this.formData.post(route("posts.store"))

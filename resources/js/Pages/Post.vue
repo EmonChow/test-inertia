@@ -1,7 +1,4 @@
-<script setup>
-    import AppLayout from '@/Layouts/AppLayout.vue';
-  
-    </script>
+
     
     <template>
         <AppLayout title="Dashboard">
@@ -44,7 +41,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <pagination :links="posts.links" />
+                      
                      
                     </div>
                 </div>

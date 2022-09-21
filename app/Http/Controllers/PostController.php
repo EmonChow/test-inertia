@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Http\Requests\PostRequest;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Redirect;
+
 
 
 class PostController extends Controller
@@ -30,6 +32,18 @@ class PostController extends Controller
         return Inertia::render('PostCreate');
     }
 
+    public function edit(Post $post)
+    {
+        return Inertia::render('PostEdit', [
+            'post' => [
+                'id' => $post->id,
+                'title' => $post->title,
+                'description' => $post->description,
+                'name' => $post->name
+            ]
+        ]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -38,32 +52,16 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-    
-        $post = new Post();
-        $post->fill($request->all());
-        if ($post->save()) {
-            return response()->json(['message' => 'Post Created Successfully']);
-        }
-        return response()->json(['message' => 'Something went wrong'], 400);
+
+        Post::create($request->all());
+        return Redirect::route('posts.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        return response()->json(Post::findOrFail($id));
-    }
-
-    
-
+   
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdatePostRequest  $request
+     * @param  \App\Http\Requests\Request  $request
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
@@ -72,7 +70,7 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         $post->fill($request->all());
         if ($post->save()) {
-            return response()->json(['message' => 'Post Updated Successfully']);
+            return Redirect::route('posts.index');
         }
         return response()->json(['message' => 'Something went wrong'], 400);
     }
@@ -83,11 +81,10 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        if (Post::destroy($id)) {
-            return response()->json(['message' => 'Post has been deleted successfully']);
-        }
-        return response()->json(['message' => 'Something went wrong'], 400);
+        $post->delete();
+        
+        return Redirect::route('posts.index');
     }
 }
