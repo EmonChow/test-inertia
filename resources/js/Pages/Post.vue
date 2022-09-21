@@ -61,7 +61,7 @@
             Link
          },
          methods:{
-            destroyPost(){
+            destroyPost(id){
                 this.$inertia.delete(route("posts.destroy", id))
             }
          }
