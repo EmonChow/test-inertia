@@ -18,9 +18,16 @@ class PostController extends Controller
     {
         $posts = Post::orderBy('id', 'ASC')->paginate(10);
         return Inertia::render('Post', ['posts' => $posts]);
-      
-        
-       
+    }
+
+     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return Inertia::render('PostCreate');
     }
 
     /**
